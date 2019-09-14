@@ -1,12 +1,20 @@
 <?php
-$con = mysqli_connect("remotemysql.com","ytzEjdpCNf","L9LcYDD81I","ytzEjdpCNf") or die("Connection Fail")
-$name = $_POST["name"];
+$con = mysqli_connect("remotemysql.com","ytzEjdpCNf","L9LcYDD81I","ytzEjdpCNf");
 
-$sql_query= "insert into users (name)VALUES ('$name');";
-if(mysqli_query($con,$sql_query)){
-    echo "DATA INSERT";
-}
-else{
-    echo "DATA INSERT ERROR";
-}
+if (mysqli_connect_errno($con)) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+ }
+  
+ $username = $_POST['username'];
+ $password = $_POST['password'];
+ $result = mysqli_query($con,"SELECT email FROM users where 
+ username='$username' and password='$password'");
+ $row = mysqli_fetch_array($result);
+ $data = $row[0];
+
+ if($data){
+    echo $data;
+ }
+  
+ mysqli_close($con);
 ?>
